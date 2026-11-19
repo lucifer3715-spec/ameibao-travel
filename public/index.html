@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>阿咩豹的旅行手账 · 美食与风景记录册</title>
+  <meta
+    name="description"
+    content="长着豆豆眉和圆鼓鼓嘴筒子的斑海豹幼崽阿咩豹，帮我们记录每一顿旅途美食、每一处心动风景、碎碎念与下一站计划"
+  />
+  <meta name="theme-color" content="#558EBC" />
+
+  <!-- iOS 添加到主屏幕全屏体验 -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="阿咩豹游记" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- 暗号解锁页 -->
+  <main id="lock-screen" class="lock-screen hidden">
+    <div class="lock-sky-wave"></div>
+    <div class="lock-card">
+      <div id="lock-ameibao" class="lock-ameibao-wrap"></div>
+      <span class="seal-tag-pill">🐾 斑海豹幼崽 · 随行记录官</span>
+      <h1 class="lock-title">阿咩豹的旅行手账</h1>
+      <p class="lock-subtitle">输入你们两个人的专属小暗号，翻开私密美食与风景相册</p>
+
+      <form id="login-form" class="login-form">
+        <div class="passcode-input-wrap">
+          <input
+            id="passcode-input"
+            type="password"
+            autocomplete="current-password"
+            placeholder="输入手账暗号..."
+            required
+          />
+          <button
+            type="button"
+            id="toggle-passcode-btn"
+            class="icon-ghost-btn"
+            aria-label="显示或隐藏密码"
+          >
+            👁️
+          </button>
+        </div>
+        <p id="login-error" class="form-error hidden"></p>
+        <button type="submit" id="login-submit-btn" class="btn btn-primary btn-lg btn-block">
+          唤醒阿咩豹，翻开手账
+        </button>
+      </form>
+
+      <p class="lock-hint">
+        所有照片、评语与悄悄话仅保存在你们自己的服务器上，只有知道暗号的人才能查看。
+      </p>
+    </div>
+  </main>
+
+  <!-- 主界面 -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- 顶部冰海晴空头部 -->
+    <header class="sky-header">
+      <div class="sky-header-inner">
+        <div class="header-top-bar">
+          <div class="brand-group">
+            <h1 id="journal-title-text" class="brand-title">阿咩豹的旅行手账</h1>
+            <div class="brand-badges">
+              <button
+                type="button"
+                id="pat-badge-btn"
+                class="glass-pill"
+                title="点一点摸摸阿咩豹圆鼓鼓的嘴筒子"
+              >
+                <span id="pat-mini-seal-icon"></span>
+                <span id="pat-count-text">摸摸嘴筒子 6 次</span>
+              </button>
+              <span id="together-days-badge" class="glass-pill hidden"></span>
+            </div>
+          </div>
+
+          <div class="header-actions">
+            <button
+              type="button"
+              id="MemoryDiceBtn"
+              class="glass-action-btn"
+              title="让阿咩豹随机翻开一段美好回忆"
+            >
+              <span>🎲</span>
+              <span class="hide-xs">随机回味</span>
+            </button>
+            <button
+              type="button"
+              id="open-settings-btn"
+              class="glass-icon-btn"
+              title="情侣昵称与数据备份设置"
+              aria-label="设置"
+            >
+              ⚙️
+            </button>
+          </div>
+        </div>
+
+        <!-- 阿咩豹互动小窝 -->
+        <div class="ameibao-stage">
+          <button
+            type="button"
+            id="ameibao-avatar-btn"
+            class="ameibao-avatar-btn"
+            title="点一点阿咩豹的豆豆眉和嘴筒子"
+          >
+            <div id="header-ameibao-svg" class="header-ameibao-svg"></div>
+          </button>
+          <div class="ameibao-dialogue-box">
+            <div class="dialogue-name-row">
+              <span class="dialogue-speaker">记录官 · 阿咩豹</span>
+              <span id="couple-badge-text" class="dialogue-couple-tag">我 &amp; 女朋友</span>
+            </div>
+            <p id="ameibao-speech-text" class="dialogue-text">
+              阿咩豹鼓起嘴筒子闻到香味啦！今天要把哪顿好吃的记进手账呀？
+            </p>
+          </div>
+        </div>
+
+        <!-- 旅途足迹统计卡 -->
+        <div class="footprint-stats-bar">
+          <div class="stat-chip" data-jump-tab="places">
+            <span class="stat-num" id="stat-places-count">0</span>
+            <span class="stat-label">点亮城市</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-chip" data-jump-tab="food">
+            <span class="stat-num" id="stat-food-count">0</span>
+            <span class="stat-label">美食打卡</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-chip" data-jump-tab="spot">
+            <span class="stat-num" id="stat-spot-count">0</span>
+            <span class="stat-label">风景足迹</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-chip" data-jump-tab="plans">
+            <span class="stat-num" id="stat-photos-count">0</span>
+            <span class="stat-label">珍藏照片</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 桌面端主导航胶囊（移动端自动变为底部悬浮栏） -->
+    <nav class="main-tabs-nav" aria-label="手账模块切换">
+      <button type="button" class="nav-tab-btn active" data-tab="food">
+        <span class="tab-emoji">🍜</span>
+        <span class="tab-label">美食</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="spot">
+        <span class="tab-emoji">🏞️</span>
+        <span class="tab-label">景点</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="places">
+        <span class="tab-emoji">🧭</span>
+        <span class="tab-label">地点册</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="murmurs">
+        <span class="tab-emoji">💌</span>
+        <span class="tab-label">碎碎念</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="plans">
+        <span class="tab-emoji">🎒</span>
+        <span class="tab-label">下一站</span>
+      </button>
+    </nav>
+
+    <!-- 主内容容器 -->
+    <main class="main-container">
+      <!-- 示例数据温馨提示条（仅当含初始示例时显示，一键清空后永久消失） -->
+      <div id="sample-banner" class="sample-banner hidden">
+        <div class="sample-banner-text">
+          <span>✨</span>
+          <span>手账里目前放了阿咩豹准备的<strong>示例卡片</strong>方便你们预览效果，随时可以一键清空开始写你们自己的故事～</span>
+        </div>
+        <button type="button" id="clear-sample-btn" class="btn btn-soft btn-sm">
+          🧹 清空示例开始记录
+        </button>
+      </div>
+
+      <!-- 视图 1 & 2：美食 / 景点 共用游记浏览器 -->
+      <section id="view-entries" class="tab-view">
+        <!-- 顶部标题与新增按钮 -->
+        <div class="section-hero-row">
+          <div>
+            <h2 id="entries-section-title" class="section-title">🍜 旅途美食图鉴</h2>
+            <p id="entries-section-desc" class="section-desc">
+              按城市归档每一顿难忘风味，写下我们两个人的专属吃货评语
+            </p>
+          </div>
+          <button type="button" id="new-entry-hero-btn" class="btn btn-primary">
+            <span>＋</span>
+            <span id="new-entry-hero-label">记一顿美食</span>
+          </button>
+        </div>
+
+        <!-- 📍 地点分类快筛栏 -->
+        <div class="filter-panel">
+          <div class="place-filter-row">
+            <span class="filter-row-label">📍 按地点：</span>
+            <div id="place-pills-wrap" class="pills-scroll-wrap"></div>
+          </div>
+
+          <div class="sub-filter-toolbar">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input
+                type="search"
+                id="entry-search-input"
+                placeholder="搜店名、景点、城市或评语关键词..."
+              />
+            </div>
+
+            <div class="toolbar-right-controls">
+              <select id="entry-sort-select" class="soft-select" aria-label="排序方式">
+                <option value="date_desc">最新打卡优先</option>
+                <option value="rating_desc">评分最高优先</option>
+                <option value="date_asc">最早回忆优先</option>
+              </select>
+
+              <button
+                type="button"
+                id="toggle-group-view-btn"
+                class="btn btn-soft btn-sm"
+                title="切换按城市分组或平铺卡片"
+              >
+                🗂️ 按地点分组
+              </button>
+            </div>
+          </div>
+
+          <!-- 细分标签快筛 -->
+          <div id="tag-pills-row" class="tag-pills-row"></div>
+        </div>
+
+        <!-- 游记卡片展示区 -->
+        <div id="entries-list-container" class="entries-list-container"></div>
+      </section>
+
+      <!-- 视图 3：🧭 地点足迹册（按城市汇总美食 + 景点） -->
+      <section id="view-places" class="tab-view hidden">
+        <div id="places-overview-wrap">
+          <div class="section-hero-row">
+            <div>
+              <h2 class="section-title">🧭 我们的城市足迹册</h2>
+              <p class="section-desc">
+                每一座一起去过的城市都会自动生成邮戳明信片，点开重温当地全部美食与景点
+              </p>
+            </div>
+            <button type="button" id="places-quick-add-btn" class="btn btn-primary">
+              ＋ 新增足迹记录
+            </button>
+          </div>
+          <div id="places-grid" class="places-grid"></div>
+        </div>
+
+        <!-- 单座城市展开详情页 -->
+        <div id="single-place-detail" class="single-place-detail hidden"></div>
+      </section>
+
+      <!-- 视图 4：💌 碎碎念留言板 -->
+      <section id="view-murmurs" class="tab-view hidden">
+        <div class="section-hero-row">
+          <div>
+            <h2 class="section-title">💌 阿咩豹的碎碎念漂流瓶</h2>
+            <p class="section-desc">
+              旅途中的小吐槽、候车时的期待、纪念日悄悄话，随时丢张小纸条给对方吧
+            </p>
+          </div>
+        </div>
+
+        <!-- 快捷写碎碎念卡片 -->
+        <form id="murmur-form" class="murmur-composer-card">
+          <div class="composer-top-row">
+            <div class="author-seg" id="murmur-author-seg"></div>
+            <div class="mood-picker" id="murmur-mood-picker">
+              <button type="button" class="mood-btn active" data-mood="seal" id="default-seal-mood-btn" title="阿咩豹">🐾</button>
+              <button type="button" class="mood-btn" data-mood="🥰">🥰</button>
+              <button type="button" class="mood-btn" data-mood="🤤">🤤</button>
+              <button type="button" class="mood-btn" data-mood="🌊">🌊</button>
+              <button type="button" class="mood-btn" data-mood="✨">✨</button>
+              <button type="button" class="mood-btn" data-mood="🎉">🎉</button>
+              <button type="button" class="mood-btn" data-mood="💤">💤</button>
+            </div>
+          </div>
+
+          <textarea
+            id="murmur-text-input"
+            rows="3"
+            placeholder="写下此刻想说的话……（比如：刚才路过的烤鱿鱼太香啦！或者：下次纪念日我们还来看海好不好～）"
+          ></textarea>
+
+          <div id="murmur-photo-preview-wrap" class="murmur-photo-preview-wrap hidden">
+            <img id="murmur-photo-preview-img" alt="附图预览" />
+            <button type="button" id="murmur-remove-photo-btn" class="photo-remove-chip">✕ 移除图片</button>
+          </div>
+
+          <div class="composer-bottom-row">
+            <div class="composer-left-tools">
+              <label class="btn btn-soft btn-sm file-label-btn">
+                <span>📷 附张小图</span>
+                <input type="file" id="murmur-photo-input" accept="image/*" class="sr-only" />
+              </label>
+              <input
+                type="text"
+                id="murmur-place-input"
+                class="inline-mini-input"
+                placeholder="📍 此刻在哪（选填）"
+                maxlength="32"
+              />
+              <label class="pin-check-label">
+                <input type="checkbox" id="murmur-pin-check" />
+                <span>📌 置顶</span>
+              </label>
+            </div>
+            <button type="submit" id="murmur-submit-btn" class="btn btn-primary">
+              投进漂流瓶
+            </button>
+          </div>
+        </form>
+
+        <div id="murmurs-wall" class="murmurs-wall"></div>
+      </section>
+
+      <!-- 视图 5：🎒 下一站旅行计划 -->
+      <section id="view-plans" class="tab-view hidden">
+        <div class="section-hero-row">
+          <div>
+            <h2 class="section-title">🎒 下一站旅行计划簿</h2>
+            <p class="section-desc">
+              把想吃的店、想看的风景和行前准备列在一起，打卡后还能一键变成正式游记！
+            </p>
+          </div>
+          <button type="button" id="new-plan-btn" class="btn btn-primary">
+            ＋ 新建下一站计划
+          </button>
+        </div>
+
+        <div id="plans-list-wrap" class="plans-list-wrap"></div>
+      </section>
+    </main>
+
+    <!-- 悬浮快捷记录按钮（手机端在右下角） -->
+    <button
+      type="button"
+      id="fab-add-btn"
+      class="fab-add-btn"
+      title="新增游记记录"
+      aria-label="新增游记记录"
+    >
+      <span>＋</span>
+    </button>
+  </div>
+
+  <!-- 弹窗 1：新增 / 编辑 美食或景点游记 -->
+  <div id="entry-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet modal-lg">
+      <div class="modal-header">
+        <h3 id="entry-modal-title" class="modal-title">记一笔新游记</h3>
+        <button type="button" class="modal-close-btn" data-close-modal="entry-modal">✕</button>
+      </div>
+
+      <form id="entry-form" class="modal-body-form">
+        <input type="hidden" id="entry-id-input" />
+        <input type="hidden" id="entry-from-plan-id" />
+        <input type="hidden" id="entry-from-wish-id" />
+
+        <!-- 模块切换：美食 vs 景点 -->
+        <div class="category-switch-bar">
+          <button type="button" class="cat-switch-btn active" data-cat="food">
+            🍜 美食打卡
+          </button>
+          <button type="button" class="cat-switch-btn" data-cat="spot">
+            🏞️ 景点足迹
+          </button>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="entry-title-input" id="entry-title-label">美食 / 店名 *</label>
+            <input
+              type="text"
+              id="entry-title-input"
+              placeholder="例如：阿婆现煮海鲜砂锅粥"
+              required
+              maxlength="80"
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="entry-place-input">所在城市 / 目的地 *</label>
+            <input
+              type="text"
+              id="entry-place-input"
+              placeholder="例如：威海 / 青岛 / 泉州"
+              required
+              maxlength="36"
+            />
+            <div id="existing-places-suggestions" class="quick-chip-row"></div>
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-field">
+            <label for="entry-location-input">具体位置 / 街区（选填）</label>
+            <input
+              type="text"
+              id="entry-location-input"
+              placeholder="例如：环海路猫头山3号台"
+              maxlength="100"
+            />
+          </div>
+          <div class="form-field">
+            <label for="entry-date-input">打卡日期</label>
+            <input type="date" id="entry-date-input" />
+          </div>
+          <div class="form-field">
+            <label for="entry-cost-input" id="entry-cost-label">人均 / 花费（选填）</label>
+            <input
+              type="text"
+              id="entry-cost-input"
+              placeholder="例如：人均 ¥68 / 门票免费"
+              maxlength="36"
+            />
+          </div>
+        </div>
+
+        <!-- 评分与阿咩豹盖章 -->
+        <div class="rating-stamp-box">
+          <div class="form-field">
+            <label>阿咩豹推荐星级</label>
+            <div id="star-rating-picker" class="star-rating-picker">
+              <button type="button" class="star-btn active" data-val="1">★</button>
+              <button type="button" class="star-btn active" data-val="2">★</button>
+              <button type="button" class="star-btn active" data-val="3">★</button>
+              <button type="button" class="star-btn active" data-val="4">★</button>
+              <button type="button" class="star-btn active" data-val="5">★</button>
+              <span id="star-rating-hint" class="star-hint">5 星 · 念念不忘！</span>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>盖一枚小海豹印章</label>
+            <div id="stamp-picker-row" class="quick-chip-row"></div>
+          </div>
+        </div>
+
+        <!-- 多张照片上传区 -->
+        <div class="form-field">
+          <div class="field-label-between">
+            <label>📸 旅途照片（最多 9 张，第一张作为封面，自动高清瘦身）</label>
+            <span id="photo-count-indicator" class="muted-mini">0 / 9 张</span>
+          </div>
+
+          <div id="entry-photos-grid" class="upload-photos-grid">
+            <label class="photo-upload-tile" id="entry-photo-add-tile">
+              <span class="upload-plus">＋</span>
+              <span class="upload-tip">上传照片</span>
+              <input
+                type="file"
+                id="entry-photos-input"
+                accept="image/*"
+                multiple
+                class="sr-only"
+              />
+            </label>
+          </div>
+        </div>
+
+        <!-- 主评语 / 游记故事 -->
+        <div class="form-field">
+          <label for="entry-comment-input">📝 游记正文与整体评语</label>
+          <textarea
+            id="entry-comment-input"
+            rows="4"
+            placeholder="写下味道怎么样、哪个机位最好看、当时发生了什么有趣的小事，或者留给下次再来的小贴士～"
+          ></textarea>
+        </div>
+
+        <!-- 情侣双人专属嘴替小评语 -->
+        <div class="couple-review-editor">
+          <div class="couple-editor-head">
+            <span>💬 两个人的专属嘴替点评（选填，像手账对话贴纸一样展示）</span>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label for="review-partner-a" id="label-review-a">我的小评语</label>
+              <input
+                type="text"
+                id="review-partner-a"
+                placeholder="一句话锐评或最爱的一点..."
+                maxlength="300"
+              />
+            </div>
+            <div class="form-field">
+              <label for="review-partner-b" id="label-review-b">女朋友的小评语</label>
+              <input
+                type="text"
+                id="review-partner-b"
+                placeholder="她当时是怎么夸或吐槽的..."
+                maxlength="300"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 标签与执笔人 -->
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="entry-tags-input">🏷️ 分类标签（点选下方或用空格/逗号分隔）</label>
+            <input
+              type="text"
+              id="entry-tags-input"
+              placeholder="例如：海鲜 老字号 看海"
+            />
+            <div id="modal-tag-suggestions" class="quick-chip-row"></div>
+          </div>
+
+          <div class="form-field">
+            <label>✍️ 这篇是谁执笔记录的</label>
+            <div id="entry-author-picker" class="author-seg"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-soft" data-close-modal="entry-modal">取消</button>
+          <button type="submit" id="save-entry-btn" class="btn btn-primary">
+            🐾 让阿咩豹盖章收好
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 弹窗 2：游记详情阅读抽屉 -->
+  <div id="detail-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet modal-lg">
+      <div class="modal-header">
+        <div id="detail-modal-badges" class="detail-head-badges"></div>
+        <button type="button" class="modal-close-btn" data-close-modal="detail-modal">✕</button>
+      </div>
+      <div id="detail-modal-content" class="detail-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- 弹窗 3：新建 / 编辑 下一站旅行计划 -->
+  <div id="plan-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 id="plan-modal-title" class="modal-title">🎒 规划下一站旅行</h3>
+        <button type="button" class="modal-close-btn" data-close-modal="plan-modal">✕</button>
+      </div>
+      <form id="plan-form" class="modal-body-form">
+        <input type="hidden" id="plan-id-input" />
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="plan-dest-input">下一站目的地 *</label>
+            <input
+              type="text"
+              id="plan-dest-input"
+              placeholder="例如：泉州 / 大理 / 北海道"
+              required
+              maxlength="40"
+            />
+          </div>
+          <div class="form-field">
+            <label for="plan-status-select">计划状态</label>
+            <select id="plan-status-select" class="soft-select">
+              <option value="planning">🌱 筹备种草中</option>
+              <option value="ongoing">✈️ 正在旅途中</option>
+              <option value="completed">🎉 已圆满打卡</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="plan-title-input">旅行主题小标题</label>
+          <input
+            type="text"
+            id="plan-title-input"
+            placeholder="例如：海风古厝与闽南小吃三天两夜"
+            maxlength="80"
+          />
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-field">
+            <label for="plan-start-input">预计出发日（选填）</label>
+            <input type="date" id="plan-start-input" />
+          </div>
+          <div class="form-field">
+            <label for="plan-end-input">预计返程日（选填）</label>
+            <input type="date" id="plan-end-input" />
+          </div>
+          <div class="form-field">
+            <label for="plan-budget-input">双人小预算（选填）</label>
+            <input
+              type="text"
+              id="plan-budget-input"
+              placeholder="例如：预算 ¥3500"
+              maxlength="40"
+            />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="plan-notes-input">路线大纲 / 车票住宿备忘</label>
+          <textarea
+            id="plan-notes-input"
+            rows="3"
+            placeholder="记下大致怎么玩、想住哪个片区、或者抢票提醒～"
+          ></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-soft" data-close-modal="plan-modal">取消</button>
+          <button type="submit" class="btn btn-primary">保存旅行计划</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 弹窗 4：情侣昵称与数据备份设置 -->
+  <div id="settings-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ 阿咩豹小窝设置</h3>
+        <button type="button" class="modal-close-btn" data-close-modal="settings-modal">✕</button>
+      </div>
+
+      <form id="settings-form" class="modal-body-form">
+        <div class="form-field">
+          <label for="set-journal-title">手账网站标题</label>
+          <input type="text" id="set-journal-title" maxlength="40" required />
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="set-partner-a">你的昵称</label>
+            <input type="text" id="set-partner-a" maxlength="20" required />
+          </div>
+          <div class="form-field">
+            <label for="set-partner-b">女朋友的昵称</label>
+            <input type="text" id="set-partner-b" maxlength="20" required />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="set-together-date">在一起 / 第一次旅行纪念日（选填，顶部显示相伴天数）</label>
+          <input type="date" id="set-together-date" />
+        </div>
+
+        <div class="form-field">
+          <label for="set-food-tags">🍜 常用美食标签（空格或逗号分隔）</label>
+          <input type="text" id="set-food-tags" />
+        </div>
+
+        <div class="form-field">
+          <label for="set-spot-tags">🏞️ 常用景点标签（空格或逗号分隔）</label>
+          <input type="text" id="set-spot-tags" />
+        </div>
+
+        <div class="settings-backup-box">
+          <h4>📦 服务器数据完整备份与迁移</h4>
+          <p>一键导出包含所有游记、照片、碎碎念与计划的完整备份文件，换服务器也能秒速恢复。</p>
+          <div class="backup-btn-row">
+            <button type="button" id="export-backup-btn" class="btn btn-soft btn-sm">
+              ⬇️ 下载完整备份 (.json)
+            </button>
+            <label class="btn btn-soft btn-sm file-label-btn">
+              <span>⬆️ 从备份文件恢复</span>
+              <input type="file" id="import-backup-input" accept=".json,application/json" class="sr-only" />
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer modal-footer-between">
+          <button type="button" id="logout-btn" class="btn btn-danger-ghost btn-sm">
+            🔒 锁上手账退出
+          </button>
+          <div class="footer-right-btns">
+            <button type="button" class="btn btn-soft" data-close-modal="settings-modal">关闭</button>
+            <button type="submit" class="btn btn-primary">保存设置</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 全屏高清照片灯箱 -->
+  <div id="photo-lightbox" class="photo-lightbox hidden" role="dialog" aria-modal="true">
+    <button type="button" id="lightbox-close-btn" class="lightbox-close-btn" aria-label="关闭大图">✕</button>
+    <button type="button" id="lightbox-prev-btn" class="lightbox-nav-btn prev" aria-label="上一张">‹</button>
+    <div class="lightbox-stage">
+      <img id="lightbox-img" alt="旅行照片大图" />
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+    <button type="button" id="lightbox-next-btn" class="lightbox-nav-btn next" aria-label="下一张">›</button>
+  </div>
+
+  <!-- 轻提示 Toast -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

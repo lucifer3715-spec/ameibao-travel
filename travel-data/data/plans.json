@@ -1,0 +1,53 @@
+[
+  {
+    "id": "pln_sample_next",
+    "isSample": true,
+    "destination": "泉州",
+    "title": "古城烟火与海边风车三天两夜（示例计划）",
+    "startDate": "",
+    "endDate": "",
+    "budget": "预算 ¥3000",
+    "status": "planning",
+    "notes": "第一天逛西街吃小吃，第二天去梧林古村落与洛伽寺看海上寺庙，第三天买伴手礼慢悠悠返程。",
+    "wishes": [
+      {
+        "id": "wsh_sample_1",
+        "type": "food",
+        "title": "水门老字号面线糊配醋肉油条",
+        "note": "早起去吃热乎的！",
+        "addedBy": "partnerB",
+        "done": false,
+        "linkedEntryId": null
+      },
+      {
+        "id": "wsh_sample_2",
+        "type": "food",
+        "title": "四果汤加满芋圆和石花膏",
+        "note": "逛累了解暑神器",
+        "addedBy": "partnerA",
+        "done": false,
+        "linkedEntryId": null
+      },
+      {
+        "id": "wsh_sample_3",
+        "type": "spot",
+        "title": "黄金海岸洛伽寺看涨潮与日落",
+        "note": "提前查好潮汐表",
+        "addedBy": "both",
+        "done": false,
+        "linkedEntryId": null
+      },
+      {
+        "id": "wsh_sample_4",
+        "type": "todo",
+        "title": "充好相机电池 + 带两把晴雨伞",
+        "note": "",
+        "addedBy": "partnerA",
+        "done": true,
+        "linkedEntryId": null
+      }
+    ],
+    "createdAt": "2026-11-19T12:00:04.545Z",
+    "updatedAt": "2026-11-19T12:00:04.545Z"
+  }
+]

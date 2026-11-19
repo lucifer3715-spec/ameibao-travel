@@ -1,0 +1,14 @@
+{
+  "name": "ameibao-travel-journal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "阿咩豹的旅行手账 —— 斑海豹幼崽陪你们记录每一顿美食、每一处风景、碎碎念与下一站旅行计划",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

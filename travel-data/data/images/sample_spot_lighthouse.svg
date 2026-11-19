@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#6DA8D6"/>
+        <stop offset="56%" stop-color="#FCE1C4"/>
+        <stop offset="100%" stop-color="#F7B787"/>
+      </linearGradient>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4A89B8"/>
+        <stop offset="100%" stop-color="#2F6690"/>
+      </linearGradient>
+    </defs>
+    <rect width="960" height="440" fill="url(#sky)"/>
+    <circle cx="650" cy="310" r="78" fill="#FFE6A3"/>
+    <rect y="420" width="960" height="300" fill="url(#sea)"/>
+    <path d="M560 445 Q650 438 740 445 M590 475 Q650 470 710 475 M615 505 Q650 502 685 505" stroke="#FFE9B5" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.85"/>
+    <path d="M0 510 Q180 430 350 520 L350 720 L0 720 Z" fill="#465C4B"/>
+    <rect x="208" y="340" width="38" height="125" rx="6" fill="#FFFDF9" stroke="#453831" stroke-width="6"/>
+    <rect x="208" y="375" width="38" height="28" fill="#E57370"/>
+    <polygon points="200,340 227,306 254,340" fill="#E57370" stroke="#453831" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M0 615 Q260 580 530 635 Q760 680 960 620 L960 720 L0 720 Z" fill="#F4DFC4"/>
+    <text x="480" y="680" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="700" fill="#5A4638">阿咩豹示例手账 · 橘子海日落灯塔</text>
+  </svg>

@@ -1,0 +1,14 @@
+services:
+  ameibao-travel:
+    build: .
+    container_name: ameibao-travel
+    restart: unless-stopped
+    ports:
+      - "8799:8799"
+    environment:
+      - TRAVEL_PASSWORD=${TRAVEL_PASSWORD:-ameibao-love}
+      - HOST=0.0.0.0
+      - PORT=8799
+      - DATA_DIR=/app/travel-data
+    volumes:
+      - ./travel-data:/app/travel-data

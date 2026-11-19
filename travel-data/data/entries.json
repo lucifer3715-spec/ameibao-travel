@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ent_sample_food",
+    "isSample": true,
+    "category": "food",
+    "title": "海风老巷鲜虾砂锅粥（示例）",
+    "place": "威海",
+    "specificLocation": "环海老街转角第一家",
+    "visitDate": "2026-11-19",
+    "rating": 5,
+    "stamp": "必吃回头客",
+    "cost": "人均 ¥68",
+    "tags": [
+      "海鲜大餐",
+      "当地必吃"
+    ],
+    "comment": "吹完海风钻进热气腾腾的小店，虾油熬得金黄鲜甜，配一碟现炸小黄鱼香迷糊了！这是阿咩豹放的示例卡片，你们随时可以一键清空换成自己的真实游记～",
+    "partnerReviews": {
+      "partnerA": "鲜虾个头超大，连喝三碗底朝天！",
+      "partnerB": "锅巴边边最香，下次冬天来还要吃这家～"
+    },
+    "author": "both",
+    "photos": [
+      {
+        "id": "pho_sample_1",
+        "path": "data/images/sample_food_porridge.svg",
+        "caption": "刚端上桌还在咕嘟冒泡的砂锅粥"
+      }
+    ],
+    "createdAt": "2026-11-19T12:00:04.545Z",
+    "updatedAt": "2026-11-19T12:00:04.545Z"
+  },
+  {
+    "id": "ent_sample_spot",
+    "isSample": true,
+    "category": "spot",
+    "title": "猫头山日落灯塔步道（示例）",
+    "place": "威海",
+    "specificLocation": "环海路三号观景台向东 200 米",
+    "visitDate": "2026-11-19",
+    "rating": 5,
+    "stamp": "神仙出片地",
+    "cost": "门票免费",
+    "tags": [
+      "看海吹风",
+      "绝美日落",
+      "出片机位"
+    ],
+    "comment": "傍晚五点半光线变成温柔的橘子汽水色，海浪拍在礁石上特别治愈。记得多穿一件防风外套！",
+    "partnerReviews": {
+      "partnerA": "随手拍都是电影封面，坡道不陡很好走。",
+      "partnerB": "和喜欢的人一起看橘子海，海风都是甜的！"
+    },
+    "author": "both",
+    "photos": [
+      {
+        "id": "pho_sample_2",
+        "path": "data/images/sample_spot_lighthouse.svg",
+        "caption": "傍晚五点半的橘子海与红白灯塔"
+      }
+    ],
+    "createdAt": "2026-11-19T12:00:04.545Z",
+    "updatedAt": "2026-11-19T12:00:04.545Z"
+  }
+]

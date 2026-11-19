@@ -1,0 +1,22 @@
+[
+  {
+    "id": "mur_sample_welcome",
+    "isSample": true,
+    "author": "ameibao",
+    "mood": "seal",
+    "place": "阿咩豹的小冰屋",
+    "text": "咩呜～我是长着豆豆眉和胖嘴筒子的斑海豹幼崽阿咩豹！以后你们吃过的美食、看过的海和山、路上的悄悄话、还有下一站想去的地方，都交给我帮你们收好吧！",
+    "photo": null,
+    "pinned": true,
+    "hearts": 3,
+    "replies": [
+      {
+        "id": "rep_sample_1",
+        "author": "partnerB",
+        "text": "摸摸阿咩豹圆鼓鼓的嘴筒子，以后请多关照啦～",
+        "createdAt": "2026-11-19T12:00:04.545Z"
+      }
+    ],
+    "createdAt": "2026-11-19T12:00:04.545Z"
+  }
+]

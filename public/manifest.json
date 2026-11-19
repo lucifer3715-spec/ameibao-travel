@@ -1,0 +1,23 @@
+{
+  "name": "阿咩豹的旅行手账",
+  "short_name": "阿咩豹游记",
+  "description": "豆豆眉斑海豹幼崽阿咩豹陪我们记录每一顿美食、每一处风景、碎碎念与下一站旅行计划",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF6EC",
+  "theme_color": "#558EBC",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
